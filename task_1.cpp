@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <cmath>
+#include <ctime>
 
 using namespace std;
 
@@ -9,98 +10,54 @@ int main()
    // кодіровка для програми
    SetConsoleCP(CP_UTF8);
    SetConsoleOutputCP(CP_UTF8);
-  int pr; 
-    double x, n, sum;
-    float eps = 0.0001; 
-    int nfor;
-intmain:
+  srand(time(NULL));
+    const int n = 40;
+    int A[n];
+    int min = 0;
+    int min_index = 0;
+    int last_negative = 0;
+    int last_negative_index = 0;
+    cout << "Масив А:" ;
 
-    x = 0; n = 0; sum = 0; nfor = 0;
-
-    cout << "Оберiть бажану дiю:" << endl;
-    cout << "1) Обчислити n - й елемент заданого арифметичного ряду" << endl;
-    cout << "2) Обчислити суму n перших елементiв заданого ряду" << endl;
-    cout << "3) Обчислити значення  суми арифметичного ряду з точнiстю Eps" << endl;
-    cout << "Введiть число: "; cin >> pr;
-
-    switch (pr)
+    for (int i = 0; i < n; i++)
     {
-//=======================================================================
-        case 1: 
-tryagaincase1:
-        cout << "Введiть x (|x|<1): "; cin >> x; 
-
-        if ( -1 < x && x < 1) 
-        { 
-            cout << "Введiть номер елемента: "; cin >> n;
-            cout << "Результат: " << pow(-1,n)*(n+1)*pow(x,n) << endl;
-            cout << "\n" << endl;
-            goto intmain;
-            break;
-        }
-        else 
+        A[i] = rand() % 201 - 100;
+        cout << A[i] << " ";
+    }
+    cout << endl;
+    for (int i = 0; i < n; i++)
+    {
+        if (A[i] < min)
         {
-            cout << "Введiть корректне число" << endl;
-            goto tryagaincase1;
+            min = A[i];
+            min_index = i;
         }
-        
-//=======================================================================
-        case 2:
-tryagaincase2:
-     
-        sum = 0; 
-        cout << "Введiть x (|x|<1): "; cin >> x; 
-
-        if ( -1 < x && x < 1) 
-        { 
-            cout << "Введiть номер елемента: "; cin >> n;
-            nfor = n;
-            n = 1;
-            for (int i = 0; i < nfor; i++)
-            {
-                sum = sum + pow(-1,n)*(n+1)*pow(x,n);
-                n++;
-            }
-            cout << "Результат: " << sum << endl; 
-            cout << "\n" << endl;
-            goto intmain;
-            break;
-        }
-
-        else 
+    }
+    for (int i = 0; i < n; i++)
+    {
+        if (A[i] < 0)
         {
-            cout << "Введiть корректне число" << endl;
-            goto tryagaincase2;
+            last_negative = A[i];
+            last_negative_index = i;
         }
-        
-//=======================================================================
-        case 3:
-        
-tryagaincase3:
-        cout << "Введiть x (|x|<1): "; cin >> x; 
-
-        if ( -1 < x && x < 1) 
-        { 
-            cout << "Введiть номер елемента: "; cin >> n;
-            n = 1;
-            while (fabs(pow(-1,n)*(n+1)*pow(x,n)) > eps)
-            {
-                sum = sum + pow(-1,n)*(n+1)*pow(x,n);
-                n++;
-            } 
-            cout << "Результат: " << sum << endl; 
-            cout << "\n" << endl;
-            goto intmain;
-            break;
-        }
-
-        else 
-        {
-            cout << "Введiть корректне число" << endl;
-            goto tryagaincase3;
-        }
-//=======================================================================
-  
-        default:  { cout << "Невiрний варiант, оберiть щось iз списку" << endl; goto intmain; break; }
-    }  
+    }
+    cout << "Змінений масив:" ;
+    A[min_index] = last_negative;
+    A[last_negative_index] = min;
+    for (int i = 0; i < n; i++)
+    {
+        cout << A[i] << " ";
+    }
+    cout << endl;
+    return 0;
 }
+// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
+// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
+
+// Советы по началу работы 
+//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
+//   2. В окне Team Explorer можно подключиться к системе управления версиями.
+//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
+//   4. В окне "Список ошибок" можно просматривать ошибки.
+//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
+//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
